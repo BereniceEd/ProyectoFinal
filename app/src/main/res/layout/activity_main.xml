@@ -1,0 +1,181 @@
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vista"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1500dp">
+
+        <TextView
+            android:id="@+id/temperatura"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="Temperatura"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/temperatura"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="Temp"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/darker_gray" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/EjemploG"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/caso"
+            android:visibility="visible">
+
+        </com.github.mikephil.charting.charts.BarChart>
+
+        <LinearLayout
+            android:id="@+id/caso"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/temp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/mostrar"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="60dp"
+                android:onClick="mostrar"
+                android:text="Mostrar más" />
+
+            <Button
+                android:id="@+id/menos"
+                android:layout_width="94dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="30dp"
+                android:onClick="menos"
+                android:text="Mostrar menos" />
+
+            <Button
+                android:id="@+id/Actualizar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="10dp"
+                android:text="Actualizar" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/luz"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/EjemploG"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="-10dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="Luz"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/luz"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="Luz"
+            android:textAlignment="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/darker_gray" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/GLuz"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_below="@+id/l"
+            android:visibility="gone">
+
+        </com.github.mikephil.charting.charts.BarChart>
+
+        <LinearLayout
+            android:id="@+id/casol"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/l"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/mostrarl"
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="60dp"
+                android:onClick="mostrar"
+                android:text="Mostrar más" />
+
+            <Button
+                android:id="@+id/menosl"
+                android:layout_width="94dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="30dp"
+                android:onClick="menos"
+                android:text="Mostrar menos" />
+
+            <Button
+                android:id="@+id/Actualizarl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginRight="10dp"
+                android:text="Actualizar" />
+
+        </LinearLayout>
+        <![CDATA[
+
+
+
+        />
+
+
+
+    ]]>
+    </RelativeLayout>
+
+
+</androidx.core.widget.NestedScrollView>
