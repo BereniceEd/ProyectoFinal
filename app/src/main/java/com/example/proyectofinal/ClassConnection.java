@@ -23,12 +23,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ClassConnection extends AsyncTask<String,String,String> {
+public class ClassConnection extends AsyncTask<String,String,StringBuffer> {
 Context con;
 
     @Override
 
-    protected String doInBackground(String... strings) {
+    protected StringBuffer doInBackground(String... strings) {
 
 
         //HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -49,7 +49,7 @@ Context con;
         try {
             //Crear la conexión para la url (para HTTPS usaríamos HttpsURLConnection)
             httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setRequestMethod("GET");
            // httpURLConnection.connect();
             //opcionales
             httpURLConnection.setConnectTimeout(5000);
@@ -61,18 +61,17 @@ Context con;
 
 
             httpURLConnection.setRequestProperty("Authorization","Basic " + Base64.encodeToString(("joe" + ":" + "pino").getBytes(), Base64.NO_WRAP));
+           httpURLConnection.connect();
             int code =httpURLConnection.getResponseCode();
-            Toast toast2 = Toast.makeText( con, "Int: " + code, Toast.LENGTH_SHORT);
-            toast2.show();
+
 //hasta aqui todo OK
             if (code==httpURLConnection.HTTP_OK){
-                Toast toast = Toast.makeText( con, "Mensaje 1", Toast.LENGTH_SHORT);
-                toast.show();
-                InputStream inputStreamResponse = httpURLConnection.getInputStream();
 
-                String linea = null;
-                StringBuilder respuestaCadena = new StringBuilder();
+                InputStream inputStreamResponse = new BufferedInputStream(httpURLConnection.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStreamResponse, "UTF-8"));
+                String linea = null;
+                StringBuffer respuestaCadena = new StringBuffer();
+
                 while((linea = bufferedReader.readLine()) != null){
                     respuestaCadena.append(linea);
                 }
@@ -84,7 +83,10 @@ Context con;
                         Log.d(this.getClass().toString(), "Error cerrando InputStream", ex);
                     }
                 }
-                return linea;
+                return respuestaCadena;
+            }
+            else {
+
             }
         } catch (IOException e) {
             e.printStackTrace();

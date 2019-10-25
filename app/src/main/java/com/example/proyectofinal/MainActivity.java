@@ -18,6 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -38,7 +39,7 @@ private  int[] grados = {-4,-2,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34}
         ClassConnection connection = new ClassConnection();
 
         try {
-            String respuesta= connection.execute("http://134.209.4.168/sensores/temperatura/1/3").get();
+            StringBuffer respuesta= connection.execute("http://134.209.4.168:80/sensores/temperatura/1567306525/1571108125").get();
             Toast toast = Toast.makeText( this, respuesta, Toast.LENGTH_SHORT);
             toast.show();
             //JSONArray jsonArray = new JSONArray(respuesta);
