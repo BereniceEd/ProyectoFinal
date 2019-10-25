@@ -23,12 +23,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ClassConnection extends AsyncTask<String,String,StringBuffer> {
+public class ClassConnection extends AsyncTask<String,String,String> {
 Context con;
 
     @Override
 
-    protected StringBuffer doInBackground(String... strings) {
+    protected String doInBackground(String... strings) {
 
 
         //HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -83,7 +83,7 @@ Context con;
                         Log.d(this.getClass().toString(), "Error cerrando InputStream", ex);
                     }
                 }
-                return respuestaCadena;
+                return respuestaCadena.toString();
             }
             else {
 

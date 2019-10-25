@@ -39,19 +39,25 @@ private  int[] grados = {-4,-2,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34}
         ClassConnection connection = new ClassConnection();
 
         try {
-            StringBuffer respuesta= connection.execute("http://134.209.4.168:80/sensores/temperatura/1567306525/1571108125").get();
-            Toast toast = Toast.makeText( this, respuesta, Toast.LENGTH_SHORT);
-            toast.show();
-            //JSONArray jsonArray = new JSONArray(respuesta);
+            String respuesta= connection.execute("http://134.209.4.168:80/sensores/temperatura/1567306525/1571108125").get();
+
+            JSONArray jsonArray = new JSONArray(respuesta);
+
+
 
             //meterlo en un while o for
-            //JSONObject jsonObject = jsonArray.getJSONObject(0);
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+            String temp = jsonObject.getString("1569500417");
             //String ob = jsonObject.getString("temperatura");
+            Toast toast = Toast.makeText( this, temp, Toast.LENGTH_SHORT);
+            toast.show();
 
 
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
