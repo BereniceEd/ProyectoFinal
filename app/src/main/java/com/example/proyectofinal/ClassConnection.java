@@ -13,7 +13,9 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.protocol.HttpContext;
+
 import com.android.volley.BuildConfig;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,18 +25,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class ClassConnection extends AsyncTask<String,String,StringBuffer> {
-Context con;
+public class ClassConnection extends AsyncTask<String, String, String> {
+    Context con;
 
     @Override
 
-    protected StringBuffer doInBackground(String... strings) {
+    protected String doInBackground(String... strings) {
 
 
-        //HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//método http (GET, POST, PUT...)
-
-        HttpURLConnection httpURLConnection =null;
+        HttpURLConnection httpURLConnection = null;
         URL url = null;
 
         try {
@@ -50,42 +49,34 @@ Context con;
             //Crear la conexión para la url (para HTTPS usaríamos HttpsURLConnection)
             httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("GET");
-           // httpURLConnection.connect();
-            //opcionales
             httpURLConnection.setConnectTimeout(5000);
             httpURLConnection.setReadTimeout(10000);
 
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
-            httpURLConnection.setRequestProperty("User-Agent","cliente Android 1.0");
-//autenticación BASIC
+            httpURLConnection.setRequestProperty("User-Agent", "cliente Android 1.0");
+            httpURLConnection.setRequestProperty("Authorization", "Basic " + Base64.encodeToString(("joe" + ":" + "pino").getBytes(), Base64.NO_WRAP));
+            httpURLConnection.connect();
+            int code = httpURLConnection.getResponseCode();
 
-
-            httpURLConnection.setRequestProperty("Authorization","Basic " + Base64.encodeToString(("joe" + ":" + "pino").getBytes(), Base64.NO_WRAP));
-           httpURLConnection.connect();
-            int code =httpURLConnection.getResponseCode();
-
-//hasta aqui todo OK
-            if (code==httpURLConnection.HTTP_OK){
+            if (code == httpURLConnection.HTTP_OK) {
 
                 InputStream inputStreamResponse = new BufferedInputStream(httpURLConnection.getInputStream());
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStreamResponse, "UTF-8"));
                 String linea = null;
                 StringBuffer respuestaCadena = new StringBuffer();
 
-                while((linea = bufferedReader.readLine()) != null){
+                while ((linea = bufferedReader.readLine()) != null) {
                     respuestaCadena.append(linea);
                 }
-                if (inputStreamResponse != null){
-                    try{
+                if (inputStreamResponse != null) {
+                    try {
                         inputStreamResponse.close();
-                    }
-                    catch(IOException ex){
+                    } catch (IOException ex) {
                         Log.d(this.getClass().toString(), "Error cerrando InputStream", ex);
                     }
                 }
-                return respuestaCadena;
-            }
-            else {
+                return respuestaCadena.toString();
+            } else {
 
             }
         } catch (IOException e) {
