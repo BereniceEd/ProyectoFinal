@@ -36,14 +36,14 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/darker_gray" />
 
-        <com.github.mikephil.charting.charts.BarChart
+        <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/EjemploG"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/caso"
             android:visibility="visible">
 
-        </com.github.mikephil.charting.charts.BarChart>
+        </com.github.mikephil.charting.charts.LineChart>
 
         <LinearLayout
             android:id="@+id/caso"
