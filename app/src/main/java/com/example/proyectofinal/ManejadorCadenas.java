@@ -11,8 +11,7 @@ public class ManejadorCadenas {
     SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     //Este método jala todas las temperaturas en un rango
-    ArrayList<Temperatura> getArregloTemperaturas(long fechaInicio, long fechaFin)
-            throws ExecutionException, InterruptedException {
+    ArrayList<Temperatura> getArregloTemperaturas(long fechaInicio, long fechaFin) throws ExecutionException, InterruptedException {
         //Clase del conector
         ClassConnection conector = new ClassConnection();
         //Creamos la URL (PARA TEMPERATURA)

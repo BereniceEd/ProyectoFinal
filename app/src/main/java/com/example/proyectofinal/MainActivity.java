@@ -106,8 +106,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
     }
