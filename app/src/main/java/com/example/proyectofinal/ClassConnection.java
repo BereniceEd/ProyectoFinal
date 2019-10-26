@@ -29,7 +29,6 @@ public class ClassConnection extends AsyncTask<String, String, String> {
     Context con;
 
     @Override
-
     protected String doInBackground(String... strings) {
 
 
