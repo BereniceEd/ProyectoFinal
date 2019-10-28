@@ -36,6 +36,31 @@ public class ManejadorCadenas {
         return datosTemperatura;
     }
 
+    ArrayList<Luminosidad> getArregloLuminosidad(long fechaInicio, long fechaFin) throws ExecutionException, InterruptedException {
+        //Clase del conector
+        ClassConnection conector = new ClassConnection();
+        //Creamos la URL (PARA TEMPERATURA)
+        String URL = "http://134.209.4.168:80/sensores/Luminosidad/" + fechaInicio
+                + "/" + fechaFin;
+        //Obtenemos el Json
+        String jsonFeo = conector.execute(URL).get();
+        //Quitamos extremos
+        String cortada = jsonFeo.substring(2, jsonFeo.length() - 1);
+        //Primer split
+        String[] primerCorte = cortada.split(", \"");
+        //ArrayList de objetos tipo temperatura
+        ArrayList<Luminosidad> datosLuminosidad = new ArrayList<>();
+        //Llenamos el arreglo
+        for (String elemento : primerCorte) {
+            //Segundo split individual
+            String[] temporal = elemento.split("\":", 2);
+            //A la fecha la pasamos por un conversor String - Long - String (fechador)
+            datosLuminosidad.add(new Luminosidad(fechador(temporal[0]), temporal[1]));
+        }
+
+        return datosLuminosidad;
+    }
+
     String fechador(String fechaEpoch){
         //Esos tres ceros hacen que funcione ._.
         Date date = new Date(Long.parseLong(fechaEpoch + "000"));

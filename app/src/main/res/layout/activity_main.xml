@@ -116,14 +116,14 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@android:color/darker_gray" />
 
-        <com.github.mikephil.charting.charts.BarChart
+        <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/GLuz"
             android:layout_width="match_parent"
             android:layout_height="500dp"
             android:layout_below="@+id/l"
             android:visibility="gone">
 
-        </com.github.mikephil.charting.charts.BarChart>
+        </com.github.mikephil.charting.charts.LineChart>
 
         <LinearLayout
             android:id="@+id/casol"
@@ -141,7 +141,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="60dp"
-                android:onClick="mostrar"
+                android:onClick="mostrarL"
                 android:text="Mostrar más" />
 
             <Button
@@ -152,7 +152,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginRight="30dp"
-                android:onClick="menos"
+                android:onClick="menosL"
                 android:text="Mostrar menos" />
 
             <Button
@@ -166,6 +166,13 @@
                 android:text="Actualizar" />
 
         </LinearLayout>
+
+        <VideoView
+            android:id="@+id/video"
+            android:layout_width="wrap_content"
+            android:layout_height="150px"
+            android:layout_below="@id/casol"
+            android:visibility="invisible" />
         <![CDATA[
 
 
