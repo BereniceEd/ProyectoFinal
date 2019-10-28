@@ -13,7 +13,7 @@ import android.widget.Toast;
 import android.widget.VideoView;
 
 
-import com.github.mikephil.charting.charts.BarChart;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
