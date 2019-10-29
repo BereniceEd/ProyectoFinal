@@ -2,192 +2,251 @@ package com.example.proyectofinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.net.Uri;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.VideoView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
+    private EditText txtTemperaturaInicio, txtTemperaturaFinal, txtLuminosidadInicio,
+    txtLuminosidadFinal, txtVideoInicio, txtVideoFinal;
+    private Button btnTemperatura, btnLuminosidad, btnVideo;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+    String date_time = "";
+    int mYear;
+    int mMonth;
+    int mDay;
 
-import java.io.BufferedReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
+    int mHour;
+    int mMinute;
 
-public class MainActivity extends AppCompatActivity {
-    private LineChart EjemploG, LuzG;
-    private View MostarM;
-    private VideoView video;
+    final Calendar c = Calendar.getInstance();
 
-ClassConnection connection  =new ClassConnection();
+    DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+    ClassConnection connection = new ClassConnection();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EjemploG = findViewById(R.id.EjemploG);
-        MostarM = findViewById(R.id.mostrar);
-        LuzG = findViewById(R.id.GLuz);
-        video=(VideoView) findViewById(R.id.video);
 
-            //String path = connection.execute("http://134.209.4.168:80/video/916/1304/1/30").get();
-           // JSONObject jsonObject = new JSONObject(path);
+        txtTemperaturaInicio = findViewById(R.id.txtTemperaturaInicio);
+        txtTemperaturaFinal = findViewById(R.id.txtTemperaturaFinal);
+        btnTemperatura = findViewById(R.id.btnTemperatura);
 
-           // video.setVideoURI(Uri.parse(path));
+        txtLuminosidadInicio = findViewById(R.id.txtLuminosidadInicio);
+        txtLuminosidadFinal = findViewById(R.id.txtLuminosidadFinal);
+        btnLuminosidad = findViewById(R.id.btnLuminosidad);
 
+        txtVideoInicio = findViewById(R.id.txtVideoInicio);
+        txtVideoFinal = findViewById(R.id.txtVideoFinal);
+        btnVideo = findViewById(R.id.btnVideo);
+
+        btnTemperatura.setOnClickListener(this);
+        btnLuminosidad.setOnClickListener(this);
+        btnVideo.setOnClickListener(this);
     }
 
-    public void menos(View view) {
-        EjemploG.setVisibility(View.GONE);
+    public void tempInicioClick(View view) {
+        if (view.getId() == R.id.txtTemperaturaInicio) {
+            datePicker("tempInicio");
+        }
     }
-    public void menosL(View view) {
-        LuzG.setVisibility(View.GONE);
+
+    public void tempFinalClick(View view) {
+        if (view.getId() == R.id.txtTemperaturaFinal) {
+            datePicker("tempFinal");
+        }
     }
 
-    public void mostrar(View view) {
+    public void lumInicioClick(View view) {
+        if (view.getId() == R.id.txtLuminosidadInicio) {
+            datePicker("lumInicio");
+        }
+    }
 
-        EjemploG.setVisibility(View.VISIBLE);
-        EjemploG.setMinimumHeight(300);
+    public void lumFinalClick(View view) {
+        if (view.getId() == R.id.txtLuminosidadFinal) {
+            datePicker("lumFinal");
+        }
+    }
 
-        ManejadorCadenas manejadorCadenas = new ManejadorCadenas();
+    public void videoInicioClick(View view) {
+        if (view.getId() == R.id.txtVideoInicio) {
+            datePicker("videoInicio");
+        }
+    }
 
-        //Esto se debe jalar desde un calendario
-        long fechaInicio = 1569518417L;
-        long fechaFin = 1569952981L;
+    public void videoFinalClick(View view) {
+        if (view.getId() == R.id.txtVideoFinal) {
+            datePicker("videoFinal");
+        }
+    }
 
-        //Un trycatch gigante alv :v
-        try {
+    private void datePicker(final String campo) {
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
 
-            //Esta cosa jala los datos del servidor y los acomoda bien bonito
-            //en una lista de objetos tipo Temperatura, necesita el rango de fechas
-            //en tipo de dato long.
-            ArrayList<Temperatura> valores
-                    = manejadorCadenas.getArregloTemperaturas(fechaInicio, fechaFin);
-            //Lista de entradas
-            List<Entry> lista = new ArrayList<>();
-            //Crea entradas con el parámetro de temperatura de la lista de valores
-            for (int i = 0; i < valores.size(); i++) {
-                lista.add(new Entry((float) i, Float.parseFloat(valores.get(i).getTemperatura())));
-            }
-            //Crea el conjunto de datos con la lista y le da un nombre
-            LineDataSet datos = new LineDataSet(lista, "Datos de temperatura");
-            //Pone los datos
-            LineData data = new LineData(datos);
-            //Color
-            datos.setColors(Color.parseColor("#328B2D"));
-            //Para que sea una curva chida
-            datos.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            //Creo que es el borde
-            EjemploG.setBorderWidth(0.9f);
-            //Se le pasan los datos al objeto de tipo gráfica
-            EjemploG.setData(data);
-            //Encabezados de fecha
-            final String[] encabezadosFechas = new String[valores.size()];
-            //Llena la lista de encabezados con el parámetro de fecha de la lista de valores
-            for (int i = 0; i < valores.size(); i++) {
-                encabezadosFechas[i] = valores.get(i).getFecha();
-            }
-            //Pone los encabezados
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    return encabezadosFechas[(int) value];
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        date_time = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        timePicker(campo);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
+
+    private void timePicker(final String campo) {
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mHour = hourOfDay;
+                        mMinute = minute;
+
+                    switch (campo){
+                        case "tempInicio":
+                            txtTemperaturaInicio.setText(date_time + " " + hourOfDay + ":" + minute);
+                            break;
+                        case "tempFinal":
+                            txtTemperaturaFinal.setText(date_time + " " + hourOfDay + ":" + minute);
+                            break;
+                        case "lumInicio":
+                            txtLuminosidadInicio.setText(date_time + " " + hourOfDay + ":" + minute);
+                            break;
+                        case "lumFinal":
+                            txtLuminosidadFinal.setText(date_time + " " + hourOfDay + ":" + minute);
+                            break;
+                        case "videoInicio":
+                            txtVideoInicio.setText(date_time + " " + hourOfDay + ":" + minute);
+                            break;
+                        case "videoFinal":
+                            txtVideoFinal.setText(date_time + " " + hourOfDay + ":" + minute);
+                            break;
+                    }
+                    }
+                }, mHour, mMinute, false);
+        timePickerDialog.show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnTemperatura:
+                if(txtTemperaturaInicio.getText().toString() != "" &&
+                txtTemperaturaFinal.getText().toString() != ""){
+                    long ini, fin;
+                    Date dateIni = null, dateFin = null;
+                    try {
+                        dateIni = format.parse(txtTemperaturaInicio.getText().toString());
+                        dateFin = format.parse(txtTemperaturaFinal.getText().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if(dateIni != null && dateFin != null){
+                        if(hayInternet()){
+                            ini = dateIni.getTime() / 1000;
+                            fin = dateFin.getTime() / 1000;
+                            Intent intent = new Intent(MainActivity.this, TemperaturaActivity.class);
+                            intent.putExtra("fechaInicio", ini);
+                            intent.putExtra("fechaFin", fin);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(this, "No hay Internet, F", Toast.LENGTH_LONG).show();
+                        }
+                    }else{
+                        Toast.makeText(this, "Se necesitan los dos campos", Toast.LENGTH_LONG).show();
+                    }
                 }
-            };
-            XAxis xAxis = EjemploG.getXAxis();
-            xAxis.setGranularity(1f);
-            xAxis.setValueFormatter(formatter);
+                break;
+            case R.id.btnLuminosidad:
+                if(txtLuminosidadInicio.getText().toString() != "" &&
+                        txtLuminosidadFinal.getText().toString() != ""){
+                    long ini, fin;
+                    Date dateIni = null, dateFin = null;
+                    try {
+                        dateIni = format.parse(txtLuminosidadInicio.getText().toString());
+                        dateFin = format.parse(txtLuminosidadFinal.getText().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if(dateIni != null && dateFin != null){
+                        if(hayInternet()){
+                            ini = dateIni.getTime() / 1000;
+                            fin = dateFin.getTime() / 1000;
+                            Intent intent = new Intent(MainActivity.this, LuminosidadActivity.class);
+                            intent.putExtra("fechaInicio", ini);
+                            intent.putExtra("fechaFin", fin);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(this, "No hay Internet, F", Toast.LENGTH_LONG).show();
+                        }
+                    }else{
+                        Toast.makeText(this, "Se necesitan los dos campos", Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+            case R.id.btnVideo:
+                if(txtVideoInicio.getText().toString() != "" &&
+                        txtVideoFinal.getText().toString() != ""){
+                    long ini, fin;
+                    Date dateIni = null, dateFin = null;
+                    try {
+                        dateIni = format.parse(txtVideoInicio.getText().toString());
+                        dateFin = format.parse(txtVideoFinal.getText().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if(dateIni != null && dateFin != null){
+                        if(hayInternet()){
+                            ini = dateIni.getTime() / 1000;
+                            fin = dateFin.getTime() / 1000;
+                            Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+                            intent.putExtra("fechaInicio", ini);
+                            intent.putExtra("fechaFin", fin);
+                            Toast.makeText(this, "El vídeo puede tardar MINUTOS en generarse", Toast.LENGTH_LONG).show();
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(this, "No hay Internet, F", Toast.LENGTH_LONG).show();
+                        }
+                    }else{
+                        Toast.makeText(this, "Se necesitan los dos campos", Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+        }
+    }
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+    public boolean hayInternet() {
+
+        try {
+            Process p = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.com.mx");
+            int val           = p.waitFor();
+            boolean reachable = (val == 0);
+            return reachable;
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
+        return false;
     }
-
-    public void mostrarL(View view){
-
-        LuzG.setVisibility(View.VISIBLE);
-        LuzG.setMinimumHeight(300);
-
-        ManejadorCadenas manejadorCadenas = new ManejadorCadenas();
-
-        //Esto se debe jalar desde un calendario
-        long fechaInicio = 1571370539L;
-        long fechaFin = 1571716139L;
-
-        //Un trycatch gigante alv :v
-        try {
-
-            //Esta cosa jala los datos del servidor y los acomoda bien bonito
-            //en una lista de objetos tipo Temperatura, necesita el rango de fechas
-            //en tipo de dato long.
-            ArrayList<Luminosidad> valores
-                    = manejadorCadenas.getArregloLuminosidad(fechaInicio, fechaFin);
-            //Lista de entradas
-            List<Entry> lista = new ArrayList<>();
-            //Crea entradas con el parámetro de temperatura de la lista de valores
-            for (int i = 0; i < valores.size(); i++) {
-                lista.add(new Entry((float) i, Float.parseFloat(valores.get(i).getLuminosidad())));
-            }
-            //Crea el conjunto de datos con la lista y le da un nombre
-            LineDataSet datos = new LineDataSet(lista, "Datos de Luminosidad");
-            //Pone los datos
-            LineData data = new LineData(datos);
-            //Color
-            datos.setColors(Color.parseColor("#328B2D"));
-            //Para que sea una curva chida
-            datos.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-            //Creo que es el borde
-            LuzG.setBorderWidth(0.9f);
-            //Se le pasan los datos al objeto de tipo gráfica
-            LuzG.setData(data);
-            //Encabezados de fecha
-            final String[] encabezadosFechas = new String[valores.size()];
-            //Llena la lista de encabezados con el parámetro de fecha de la lista de valores
-            for (int i = 0; i < valores.size(); i++) {
-                encabezadosFechas[i] = valores.get(i).getFecha();
-            }
-            //Pone los encabezados
-            ValueFormatter formatter = new ValueFormatter() {
-                @Override
-                public String getAxisLabel(float value, AxisBase axis) {
-                    return encabezadosFechas[(int) value];
-                }
-            };
-            XAxis xAxis = LuzG.getXAxis();
-            xAxis.setGranularity(1f);
-            xAxis.setValueFormatter(formatter);
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
 }

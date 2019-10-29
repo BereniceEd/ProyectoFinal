@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TemperaturaActivity"/>
+        <activity android:name=".LuminosidadActivity"/>
+        <activity android:name=".VideoActivity"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

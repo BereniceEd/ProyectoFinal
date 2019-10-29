@@ -6,183 +6,286 @@
     android:background="#ffffff"
     tools:context=".MainActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1500dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/temperatura"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="Temperatura"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/black" />
+            android:text="Registros de temperatura"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/txtTemperaturaInicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="date"
+            android:hint="Seleccione hora y fecha de inicio"
+            android:onClick="tempInicioClick" />
+
+        <EditText
+            android:id="@+id/txtTemperaturaFinal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:inputType="date"
+            android:hint="Seleccione hora y fecha de final"
+            android:onClick="tempFinalClick" />
+
+        <Button
+            android:id="@+id/btnTemperatura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver registros" />
 
         <TextView
-            android:id="@+id/temp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/temperatura"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="Temp"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/darker_gray" />
+            android:text="Registros de luminosidad"
+            android:textSize="30sp" />
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/EjemploG"
+        <EditText
+            android:id="@+id/txtLuminosidadInicio"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@+id/caso"
-            android:visibility="visible">
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Seleccione hora y fecha de inicio"
+            android:inputType="date"
+            android:onClick="lumInicioClick" />
 
-        </com.github.mikephil.charting.charts.LineChart>
-
-        <LinearLayout
-            android:id="@+id/caso"
+        <EditText
+            android:id="@+id/txtLuminosidadFinal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/temp"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Seleccione hora y fecha de final"
+            android:inputType="date"
+            android:onClick="lumFinalClick" />
 
-            <Button
-                android:id="@+id/mostrar"
-                android:layout_width="104dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="60dp"
-                android:onClick="mostrar"
-                android:text="Mostrar más" />
-
-            <Button
-                android:id="@+id/menos"
-                android:layout_width="94dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="30dp"
-                android:onClick="menos"
-                android:text="Mostrar menos" />
-
-            <Button
-                android:id="@+id/Actualizar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="10dp"
-                android:text="Actualizar" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/btnLuminosidad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver registros" />
 
         <TextView
-            android:id="@+id/luz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/EjemploG"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="-10dp"
-            android:layout_marginTop="56dp"
-            android:layout_marginRight="10dp"
-            android:gravity="center"
-            android:text="Luz"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/l"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/luz"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:text="Luz"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/darker_gray" />
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/GLuz"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:layout_below="@+id/l"
-            android:visibility="gone">
+            android:layout_height="wrap_content"
+            android:text="Vídeo"
+            android:textSize="30sp" />
 
-        </com.github.mikephil.charting.charts.LineChart>
-
-        <LinearLayout
-            android:id="@+id/casol"
+        <EditText
+            android:id="@+id/txtVideoInicio"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/l"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Seleccione hora y fecha de inicio"
+            android:inputType="date"
+            android:onClick="videoInicioClick" />
 
-            <Button
-                android:id="@+id/mostrarl"
-                android:layout_width="104dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="60dp"
-                android:onClick="mostrarL"
-                android:text="Mostrar más" />
+        <EditText
+            android:id="@+id/txtVideoFinal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Seleccione hora y fecha de final"
+            android:inputType="date"
+            android:onClick="videoFinalClick" />
 
-            <Button
-                android:id="@+id/menosl"
-                android:layout_width="94dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="30dp"
-                android:onClick="menosL"
-                android:text="Mostrar menos" />
+        <Button
+            android:id="@+id/btnVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Toma vídeo" />
 
-            <Button
-                android:id="@+id/Actualizarl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="1dp"
-                android:layout_marginRight="10dp"
-                android:text="Actualizar" />
+<!--        <TextView-->
+<!--            android:id="@+id/temperatura"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentTop="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Temperatura"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textAppearance="?android:attr/textAppearanceLarge"-->
+<!--            android:textColor="@android:color/black" />-->
 
-        </LinearLayout>
+<!--        <TextView-->
+<!--            android:id="@+id/temp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/temperatura"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Temp"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textAppearance="?android:attr/textAppearanceMedium"-->
+<!--            android:textColor="@android:color/darker_gray" />-->
 
-        <VideoView
-            android:id="@+id/video"
-            android:layout_width="wrap_content"
-            android:layout_height="150px"
-            android:layout_below="@id/casol"
-            android:visibility="invisible" />
-        <![CDATA[
+<!--        <com.github.mikephil.charting.charts.LineChart-->
+<!--            android:id="@+id/EjemploG"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_below="@+id/caso"-->
+<!--            android:visibility="visible">-->
+
+<!--        </com.github.mikephil.charting.charts.LineChart>-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/caso"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_below="@+id/temp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/mostrar"-->
+<!--                android:layout_width="104dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:layout_marginLeft="50dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="1dp"-->
+<!--                android:layout_marginRight="60dp"-->
+<!--                android:onClick="mostrar"-->
+<!--                android:text="Mostrar más" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/menos"-->
+<!--                android:layout_width="94dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="1dp"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:onClick="menos"-->
+<!--                android:text="Mostrar menos" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/Actualizar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="15dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="1dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:text="Actualizar" />-->
+<!--        </LinearLayout>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/luz"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/EjemploG"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_marginLeft="-10dp"-->
+<!--            android:layout_marginTop="56dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Luz"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textAppearance="?android:attr/textAppearanceLarge"-->
+<!--            android:textColor="@android:color/black" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/l"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/luz"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Luz"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textAppearance="?android:attr/textAppearanceMedium"-->
+<!--            android:textColor="@android:color/darker_gray" />-->
+
+<!--        <com.github.mikephil.charting.charts.LineChart-->
+<!--            android:id="@+id/GLuz"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="500dp"-->
+<!--            android:layout_below="@+id/l"-->
+<!--            android:visibility="gone">-->
+
+<!--        </com.github.mikephil.charting.charts.LineChart>-->
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/casol"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_below="@id/l"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/mostrarl"-->
+<!--                android:layout_width="104dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:layout_marginLeft="50dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="1dp"-->
+<!--                android:layout_marginRight="60dp"-->
+<!--                android:onClick="mostrarL"-->
+<!--                android:text="Mostrar más" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/menosl"-->
+<!--                android:layout_width="94dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="1dp"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:onClick="menosL"-->
+<!--                android:text="Mostrar menos" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/Actualizarl"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="15dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="1dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:text="Actualizar" />-->
+
+<!--        </LinearLayout>-->
+
+<!--        <VideoView-->
+<!--            android:id="@+id/video"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="150px"-->
+<!--            android:layout_below="@id/casol"-->
+<!--            android:visibility="invisible" />-->
+<!--        <![CDATA[-->
 
 
 
-        />
+<!--        />-->
 
 
 
-    ]]>
-    </RelativeLayout>
+<!--    ]]>-->
+    </LinearLayout>
 
 
 </androidx.core.widget.NestedScrollView>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProyectoFinal</string>
-    <string name="MessageProgressDialog">El contenido esta cargandose</string>
+    <string name="app_name">Proyecto Final AC V</string>
+    <string name="MessageProgressDialog">El contenido esta cargándose</string>
     <string name="TitleProgressDialog">Espere...</string>
 </resources>
