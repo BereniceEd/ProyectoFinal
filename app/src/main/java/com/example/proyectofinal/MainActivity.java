@@ -48,13 +48,10 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private LineChart EjemploG, LuzG;
-    private View MostarM;
-    private VideoView video;
 
     private EditText txtTemperaturaInicio, txtTemperaturaFinal, txtLuminosidadInicio,
-    txtLuminosidadFinal;
-    private Button btnTemperatura, btnLuminosidad;
+    txtLuminosidadFinal, txtVideoInicio, txtVideoFinal;
+    private Button btnTemperatura, btnLuminosidad, btnVideo;
 
     String date_time = "";
     int mYear;
@@ -83,8 +80,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtLuminosidadFinal = findViewById(R.id.txtLuminosidadFinal);
         btnLuminosidad = findViewById(R.id.btnLuminosidad);
 
+        txtVideoInicio = findViewById(R.id.txtVideoInicio);
+        txtVideoFinal = findViewById(R.id.txtVideoFinal);
+        btnVideo = findViewById(R.id.btnVideo);
+
         btnTemperatura.setOnClickListener(this);
         btnLuminosidad.setOnClickListener(this);
+        btnVideo.setOnClickListener(this);
     }
 
     public void tempInicioClick(View view) {
@@ -108,6 +110,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void lumFinalClick(View view) {
         if (view.getId() == R.id.txtLuminosidadFinal) {
             datePicker("lumFinal");
+        }
+    }
+
+    public void videoInicioClick(View view) {
+        if (view.getId() == R.id.txtVideoInicio) {
+            datePicker("videoInicio");
+        }
+    }
+
+    public void videoFinalClick(View view) {
+        if (view.getId() == R.id.txtVideoFinal) {
+            datePicker("videoFinal");
         }
     }
 
@@ -149,6 +163,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             break;
                         case "lumFinal":
                             txtLuminosidadFinal.setText(date_time + " " + hourOfDay + ":" + minute);
+                            break;
+                        case "videoInicio":
+                            txtVideoInicio.setText(date_time + " " + hourOfDay + ":" + minute);
+                            break;
+                        case "videoFinal":
+                            txtVideoFinal.setText(date_time + " " + hourOfDay + ":" + minute);
                             break;
                     }
                     }
@@ -205,9 +225,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
                 break;
+            case R.id.btnVideo:
+                if(txtVideoInicio.getText().toString() != "" &&
+                        txtVideoFinal.getText().toString() != ""){
+                    long ini, fin;
+                    Date dateIni = null, dateFin = null;
+                    try {
+                        dateIni = format.parse(txtVideoInicio.getText().toString());
+                        dateFin = format.parse(txtVideoFinal.getText().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if(dateIni != null && dateFin != null){
+                        ini = dateIni.getTime() / 1000;
+                        fin = dateFin.getTime() / 1000;
+                        Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+                        intent.putExtra("fechaInicio", ini);
+                        intent.putExtra("fechaFin", fin);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(this, "Algo salió mal :c", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
         }
     }
-
-
-
 }

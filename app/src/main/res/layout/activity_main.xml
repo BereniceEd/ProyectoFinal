@@ -79,6 +79,40 @@
             android:layout_height="wrap_content"
             android:text="Ver registros" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Vídeo"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/txtVideoInicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Seleccione hora y fecha de inicio"
+            android:inputType="date"
+            android:onClick="videoInicioClick" />
+
+        <EditText
+            android:id="@+id/txtVideoFinal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:ems="10"
+            android:focusable="false"
+            android:hint="Seleccione hora y fecha de final"
+            android:inputType="date"
+            android:onClick="videoFinalClick" />
+
+        <Button
+            android:id="@+id/btnVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Toma vídeo" />
+
 <!--        <TextView-->
 <!--            android:id="@+id/temperatura"-->
 <!--            android:layout_width="wrap_content"-->
