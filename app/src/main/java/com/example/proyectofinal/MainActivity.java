@@ -2,16 +2,22 @@ package com.example.proyectofinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.VideoView;
-
 
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -32,35 +38,181 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private LineChart EjemploG, LuzG;
     private View MostarM;
     private VideoView video;
 
-ClassConnection connection  =new ClassConnection();
+    private EditText txtTemperaturaInicio, txtTemperaturaFinal;
+    private Button btnTemperatura;
+
+    String date_time = "";
+    int mYear;
+    int mMonth;
+    int mDay;
+
+    int mHour;
+    int mMinute;
+
+    final Calendar c = Calendar.getInstance();
+
+    DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+    ClassConnection connection = new ClassConnection();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EjemploG = findViewById(R.id.EjemploG);
-        MostarM = findViewById(R.id.mostrar);
-        LuzG = findViewById(R.id.GLuz);
-        video=(VideoView) findViewById(R.id.video);
+//        EjemploG = findViewById(R.id.EjemploG);
+//        MostarM = findViewById(R.id.mostrar);
+//        LuzG = findViewById(R.id.GLuz);
+//        video = (VideoView) findViewById(R.id.video);
 
-            //String path = connection.execute("http://134.209.4.168:80/video/916/1304/1/30").get();
-           // JSONObject jsonObject = new JSONObject(path);
+        txtTemperaturaInicio = findViewById(R.id.txtTemperaturaInicio);
+        txtTemperaturaFinal = findViewById(R.id.txtTemperaturaFinal);
+        btnTemperatura = findViewById(R.id.btnTemperatura);
 
-           // video.setVideoURI(Uri.parse(path));
+        btnTemperatura.setOnClickListener(this);
+//        txtTemperaturaInicio.setOnClickListener(this);
+//        txtTemperaturaFinal.setOnClickListener(this);
+        //String path = connection.execute("http://134.209.4.168:80/video/916/1304/1/30").get();
+        // JSONObject jsonObject = new JSONObject(path);
 
+        // video.setVideoURI(Uri.parse(path));
+
+    }
+
+    public void tempInicioClick(View view) {
+        if (view.getId() == R.id.txtTemperaturaInicio) {
+
+            datePicker("tempInicio");
+
+
+//            Calendar c = Calendar.getInstance();
+//            final EditText eto = (EditText) view;
+//            DatePickerDialog mdiDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+//                @Override
+//                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                    String sf = String.format(Locale.US, "%04d-%02d-%02d", year, monthOfYear, dayOfMonth);
+//                    eto.setText(sf);
+//                }
+//            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+//            mdiDialog.show();
+            Toast.makeText(this, "Click inicio", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void tempFinalClick(View view) {
+        if (view.getId() == R.id.txtTemperaturaFinal) {
+
+            datePicker("tempFinal");
+//            Calendar c = Calendar.getInstance();
+//            final EditText eto = (EditText) view;
+//            DatePickerDialog mdiDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+//                @Override
+//                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                    String sf = String.format(Locale.US, "%04d-%02d-%02d", year, monthOfYear, dayOfMonth);
+//                    eto.setText(sf);
+//                }
+//            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+//            mdiDialog.show();
+            Toast.makeText(this, "Click final", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void datePicker(final String campo) {
+        //final Calendar c = Calendar.getInstance();
+        mYear = c.get(Calendar.YEAR);
+        mMonth = c.get(Calendar.MONTH);
+        mDay = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        date_time = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                        timePicker(campo);
+                    }
+                }, mYear, mMonth, mDay);
+        datePickerDialog.show();
+    }
+
+    private void timePicker(final String campo) {
+        //final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        mHour = hourOfDay;
+                        mMinute = minute;
+
+                    switch (campo){
+                        case "tempInicio":
+                            txtTemperaturaInicio.setText(date_time + " " + hourOfDay + ":" + minute);
+                            break;
+                        case "tempFinal":
+                            txtTemperaturaFinal.setText(date_time + " " + hourOfDay + ":" + minute);
+                            break;
+                    }
+
+
+                    }
+                }, mHour, mMinute, false);
+        timePickerDialog.show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnTemperatura:
+                if(txtTemperaturaInicio.getText().toString() != "" &&
+                txtTemperaturaFinal.getText().toString() != ""){
+                    long ini, fin;
+                    Date dateIni = null, dateFin = null;
+                    try {
+                        dateIni = format.parse(txtTemperaturaInicio.getText().toString());
+                        dateFin = format.parse(txtTemperaturaFinal.getText().toString());
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    if(dateIni != null && dateFin != null){
+                        ini = dateIni.getTime() / 1000;
+                        fin = dateFin.getTime() / 1000;
+                        Intent intent = new Intent(MainActivity.this, TemperaturaActivity.class);
+                        intent.putExtra("fechaInicio", ini);
+                        intent.putExtra("fechaFin", fin);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(this, "Algo salió mal :c", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                break;
+//            case R.id.txtTemperaturaInicio:
+//                Toast.makeText(this, "Inicio", Toast.LENGTH_SHORT).show();
+//                break;
+//            case R.id.txtTemperaturaFinal:
+//                Toast.makeText(this, "Final", Toast.LENGTH_SHORT).show();
+//                break;
+        }
     }
 
     public void menos(View view) {
         EjemploG.setVisibility(View.GONE);
     }
+
     public void menosL(View view) {
         LuzG.setVisibility(View.GONE);
     }
@@ -127,7 +279,7 @@ ClassConnection connection  =new ClassConnection();
 
     }
 
-    public void mostrarL(View view){
+    public void mostrarL(View view) {
 
         LuzG.setVisibility(View.VISIBLE);
         LuzG.setMinimumHeight(300);
