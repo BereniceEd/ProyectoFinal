@@ -191,14 +191,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                     }
                     if(dateIni != null && dateFin != null){
-                        ini = dateIni.getTime() / 1000;
-                        fin = dateFin.getTime() / 1000;
-                        Intent intent = new Intent(MainActivity.this, TemperaturaActivity.class);
-                        intent.putExtra("fechaInicio", ini);
-                        intent.putExtra("fechaFin", fin);
-                        startActivity(intent);
+                        if(hayInternet()){
+                            ini = dateIni.getTime() / 1000;
+                            fin = dateFin.getTime() / 1000;
+                            Intent intent = new Intent(MainActivity.this, TemperaturaActivity.class);
+                            intent.putExtra("fechaInicio", ini);
+                            intent.putExtra("fechaFin", fin);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(this, "No hay Internet, F", Toast.LENGTH_LONG).show();
+                        }
                     }else{
-                        Toast.makeText(this, "Algo salió mal :c", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Se necesitan los dos campos", Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
@@ -214,14 +218,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                     }
                     if(dateIni != null && dateFin != null){
-                        ini = dateIni.getTime() / 1000;
-                        fin = dateFin.getTime() / 1000;
-                        Intent intent = new Intent(MainActivity.this, LuminosidadActivity.class);
-                        intent.putExtra("fechaInicio", ini);
-                        intent.putExtra("fechaFin", fin);
-                        startActivity(intent);
+                        if(hayInternet()){
+                            ini = dateIni.getTime() / 1000;
+                            fin = dateFin.getTime() / 1000;
+                            Intent intent = new Intent(MainActivity.this, LuminosidadActivity.class);
+                            intent.putExtra("fechaInicio", ini);
+                            intent.putExtra("fechaFin", fin);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(this, "No hay Internet, F", Toast.LENGTH_LONG).show();
+                        }
                     }else{
-                        Toast.makeText(this, "Algo salió mal :c", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Se necesitan los dos campos", Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
@@ -237,17 +245,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         e.printStackTrace();
                     }
                     if(dateIni != null && dateFin != null){
-                        ini = dateIni.getTime() / 1000;
-                        fin = dateFin.getTime() / 1000;
-                        Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-                        intent.putExtra("fechaInicio", ini);
-                        intent.putExtra("fechaFin", fin);
-                        startActivity(intent);
+                        if(hayInternet()){
+                            ini = dateIni.getTime() / 1000;
+                            fin = dateFin.getTime() / 1000;
+                            Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+                            intent.putExtra("fechaInicio", ini);
+                            intent.putExtra("fechaFin", fin);
+                            Toast.makeText(this, "El vídeo puede tardar MINUTOS en generarse", Toast.LENGTH_LONG).show();
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(this, "No hay Internet, F", Toast.LENGTH_LONG).show();
+                        }
                     }else{
-                        Toast.makeText(this, "Algo salió mal :c", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Se necesitan los dos campos", Toast.LENGTH_LONG).show();
                     }
                 }
                 break;
         }
+    }
+
+    public boolean hayInternet() {
+
+        try {
+            Process p = java.lang.Runtime.getRuntime().exec("ping -c 1 www.google.com.mx");
+            int val           = p.waitFor();
+            boolean reachable = (val == 0);
+            return reachable;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
