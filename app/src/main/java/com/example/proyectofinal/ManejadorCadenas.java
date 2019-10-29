@@ -40,7 +40,7 @@ public class ManejadorCadenas {
         //Clase del conector
         ClassConnection conector = new ClassConnection();
         //Creamos la URL (PARA TEMPERATURA)
-        String URL = "http://134.209.4.168:80/sensores/Luminosidad/" + fechaInicio
+        String URL = "http://134.209.4.168:80/sensores/luminosidad/" + fechaInicio
                 + "/" + fechaFin;
         //Obtenemos el Json
         String jsonFeo = conector.execute(URL).get();
