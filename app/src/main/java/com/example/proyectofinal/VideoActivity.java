@@ -22,7 +22,7 @@ public class VideoActivity extends AppCompatActivity {
 
         visorWeb = findViewById(R.id.visorWeb);
         WebSettings webSettings = visorWeb.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+        webSettings.setJavaScriptEnabled(true);//916 y 1304
         visorWeb.loadUrl("http://joe:pino@134.209.4.168/video/" + fechaInicio + "/" + fechaFin + "/1/30");
         visorWeb.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

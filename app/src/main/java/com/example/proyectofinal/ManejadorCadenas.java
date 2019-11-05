@@ -11,12 +11,18 @@ public class ManejadorCadenas {
     SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     //Este método jala todas las temperaturas en un rango
-    ArrayList<Temperatura> getArregloTemperaturas(long fechaInicio, long fechaFin) throws ExecutionException, InterruptedException {
+    ArrayList<Temperatura> getArregloTemperaturas(long fechaInicio, long fechaFin, boolean filtro, int numeroFiltro) throws ExecutionException, InterruptedException {
         //Clase del conector
         ClassConnection conector = new ClassConnection();
         //Creamos la URL (PARA TEMPERATURA)
-        String URL = "http://134.209.4.168:80/sensores/temperatura/" + fechaInicio
-                + "/" + fechaFin;
+        String URL = "";
+        if(filtro){
+            URL = "http://134.209.4.168:80/sensores/temperatura/" + fechaInicio
+                    + "/" + fechaFin + "/" + numeroFiltro;
+        }else{
+            URL = "http://134.209.4.168:80/sensores/temperatura/" + fechaInicio
+                    + "/" + fechaFin;
+        }
         //Obtenemos el Json
         String jsonFeo = conector.execute(URL).get();
         //Quitamos extremos
@@ -36,12 +42,18 @@ public class ManejadorCadenas {
         return datosTemperatura;
     }
 
-    ArrayList<Luminosidad> getArregloLuminosidad(long fechaInicio, long fechaFin) throws ExecutionException, InterruptedException {
+    ArrayList<Luminosidad> getArregloLuminosidad(long fechaInicio, long fechaFin, boolean filtro, int numeroFiltro) throws ExecutionException, InterruptedException {
         //Clase del conector
         ClassConnection conector = new ClassConnection();
         //Creamos la URL (PARA TEMPERATURA)
-        String URL = "http://134.209.4.168:80/sensores/luminosidad/" + fechaInicio
-                + "/" + fechaFin;
+        String URL = "";
+        if(filtro){
+            URL = "http://134.209.4.168:80/sensores/luminosidad/" + fechaInicio
+                    + "/" + fechaFin + "/" + numeroFiltro;
+        }else{
+            URL = "http://134.209.4.168:80/sensores/luminosidad/" + fechaInicio
+                    + "/" + fechaFin;
+        }
         //Obtenemos el Json
         String jsonFeo = conector.execute(URL).get();
         //Quitamos extremos

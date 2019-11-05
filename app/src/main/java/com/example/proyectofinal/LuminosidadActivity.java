@@ -41,8 +41,14 @@ public class LuminosidadActivity extends AppCompatActivity {
             //en una lista de objetos tipo Temperatura, necesita el rango de fechas
             //en tipo de dato long.
             ArrayList<Luminosidad> valores
-                    = manejadorCadenas.getArregloLuminosidad(fechaInicio, fechaFin);
+                    = manejadorCadenas.getArregloLuminosidad(fechaInicio, fechaFin, false, 0);
             //Lista de entradas
+            double cantidad = valores.size();
+            if(cantidad > 200.0){
+                int filtro = valores.size() / 100;
+                valores.clear();
+                valores = manejadorCadenas.getArregloLuminosidad(fechaInicio, fechaFin, true, filtro);
+            }
             List<Entry> lista = new ArrayList<>();
             //Crea entradas con el parámetro de temperatura de la lista de valores
             for (int i = 0; i < valores.size(); i++) {
